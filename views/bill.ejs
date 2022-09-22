@@ -8,21 +8,28 @@
                 <div class="p-0 mb-1 m-0 row">
                     <div class="input-group mb-3 w-75">
                         <span class="input-group-text" id="basic-addon1">Bill No:</span>
-                        <input type="number" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name="billNo" type="number" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
                     </div>                  
                 </div>
                 <div class="p-0 mb-1 m-0 row">
                     <div class="input-group mb-3 w-75">
                         <span class="input-group-text" id="basic-addon1">Bill Date:</span>
-                        <input disabled type="text" class="form-control" value="<%= billDate %>" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name="billDate" disabled type="text" class="form-control" value="<%= billDate %>" aria-label="Username" aria-describedby="basic-addon1">
                     </div>                  
                 </div>
                 <div class="input-group mb-3 w-50">
-                    <form id="itemForm" class="input-group mb-3 w-50" action="/billAdd" method="post">
-                        <span class="input-group-text" id="basic-addon1">Item Code:</span>
-                        <input required type="text" class="form-control" name="inputItemCode" placeholder="0000">
-                        <button form="itemForm" class="btn btn-outline-secondary" type="submit" name="itemAdd" id="button-addon2">Add</button>
-                    </form>
+                <!-- IDK WHY IT'S NEEDED HERE BUT IT WORKS LIKE THIS LOL  -->
+                    <form id="itemAdd" action="/billAdd" method="post" class="row g-1 m-0 text-wrap">
+                        <div class="col-3 lh-1 align-middle">
+                          <label>Item Code:</label>
+                        </div>
+                        <div class="col-3">
+                          <input type="text" name="inputItemCode" class="form-control" id="inputPassword2" required placeholder="0000">
+                        </div>
+                        <div class="col-3">
+                          <button form="itemAdd" type="submit" name="itemAdd" class="btn btn-primary mb-3">Add</button>
+                        </div>
+                      </form>
                 </div>
             </div>
             <div class="col-sm-5 col-md-6">
@@ -30,13 +37,13 @@
                 <div class="p-0 mb-1 m-0 row">
                     <div class="input-group mb-3 w-75">
                         <span class="input-group-text" id="basic-addon1">Name:</span>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="custName" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
                     </div>                  
                 </div>
                 <div class="p-0 mb-1 m-0 row">
                     <div class="input-group mb-3 w-75">
                         <span class="input-group-text" id="basic-addon1">Mobile:</span>
-                        <input type="text" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" name="custMob" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
                     </div>                  
                 </div>
             </div>       
@@ -91,7 +98,7 @@
                     <div class="input-group mb-3 w-50">
                         <span class="input-group-text text-wrap" id="basic-addon1">Payment Method:</span>
                         <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"> -->
-                        <select class="form-select" id="inputGroupSelect01">
+                        <select name="payMeth" class="form-select" id="inputGroupSelect01">
                             <option selected>--Select--</option>
                             <option value="1">Card</option>
                             <option value="2">Cash</option>
@@ -102,7 +109,7 @@
                 <div class="p-0 mb-1 m-0 row">
                     <div class="input-group mb-3 w-50">
                         <span class="input-group-text text-wrap" id="basic-addon1">Amount Received:</span>
-                        <input type="text" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name="amtRec" type="text" class="form-control" placeholder="Number" value="">
                     </div>                  
                 </div>
                 <div class="p-0 mb-1 m-0 row">

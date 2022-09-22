@@ -157,6 +157,10 @@ const bill1 = new Bill({
 // bill1.save();
 // console.log(Item.find({}))
 
+app.post("/gen", function(req,res){
+    console.log(req.body);
+    res.redirect("/bill");
+})
 
 app.post("/billAdd", function(req,res){
     console.log("BILLADD POST----------")
