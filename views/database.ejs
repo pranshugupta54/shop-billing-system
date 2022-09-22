@@ -1,0 +1,82 @@
+<%- include('partials/header2'); -%>
+
+<h1>Database</h1>
+<h3><%= billDate %></h3>
+<form class="input-group mb-3" action="/databaseAdd" method="post">
+    <input type="text" class="form-control" placeholder="Item Code" name="code" required autocomplete="off">
+    <input type="text" class="form-control w-50" placeholder="Item Name" name="name" required autocomplete="off">
+    <input type="text" class="form-control" placeholder="Unit Price" name="price" required autocomplete="off">
+    <input type="text" class="form-control" placeholder="Discount" name="discount" required autocomplete="off">
+    <input type="text" class="form-control" placeholder="Stock" name="stock" required autocomplete="off">
+    <button type="submit" class="btn btn-success">Add Item</button>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item Code</th>
+            <th class="w-50 text-center" scope="col">Item Name</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Stock</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% newListItems.forEach(function(item){ %>
+            <form action="/databaseRemove" method="post">
+                <tr>
+                    <th scope="row">1</th>
+                    <td><%= item.itemCode %></td>
+                    <td><%= item.itemName %></td>
+                    <td> <%= item.itemUnitPrice %></td>
+                    <td> <%= item.itemDiscount %></td>
+                    <td><%= item.itemStock %></td>
+                    <td><button value="<%=item._id%>" type="submit" class="btn btn-danger" name="delete">Remove</button></td>
+                </tr>
+            </form>
+        <% }) %> 
+    </tbody>
+</table>
+
+
+<!-- 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item Code</th>
+            <th class="w-50 text-center" scope="col">Item Name</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Stock</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>1234</td>
+            <td>Chips</td>
+            <td>12</td>
+            <td>2</td>
+            <td>1</td>
+            <td><button type="button" class="btn btn-danger">Remove</button></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>1235</td>
+            <td>Coke</td>
+            <td>23</td>
+            <td>3</td>
+            <td>2</td>
+            <td><button type="button" class="btn btn-danger">Remove</button></td>
+        </tr>
+    </tbody> 
+</table> -->
+
+
+
+
+<%- include('partials/footer'); -%>

@@ -1,0 +1,150 @@
+<%- include('partials/header2'); -%>
+
+<form id="outer" action="/gen" method="post">
+    <div class="text-center">
+        <div class="row">
+            <div class="col-sm-5 col-md-6">
+                <h3 class="ms-5 text-start">Invoice</h3>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-75">
+                        <span class="input-group-text" id="basic-addon1">Bill No:</span>
+                        <input type="number" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-75">
+                        <span class="input-group-text" id="basic-addon1">Bill Date:</span>
+                        <input disabled type="text" class="form-control" value="<%= billDate %>" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+                <div class="input-group mb-3 w-50">
+                    <form id="itemForm" class="input-group mb-3 w-50" action="/billAdd" method="post">
+                        <span class="input-group-text" id="basic-addon1">Item Code:</span>
+                        <input required type="text" class="form-control" name="inputItemCode" placeholder="0000">
+                        <button form="itemForm" class="btn btn-outline-secondary" type="submit" name="itemAdd" id="button-addon2">Add</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-6">
+                <h3 class="ms-5 text-start">Customer Details:</h3>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-75">
+                        <span class="input-group-text" id="basic-addon1">Name:</span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-75">
+                        <span class="input-group-text" id="basic-addon1">Mobile:</span>
+                        <input type="text" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+            </div>       
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">#</th>
+                <th scope="col">Item Code</th>
+                <th class="w-50" scope="col">Item Name</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Discount</th>
+                <th scope="col">QTY</th>
+                <th scope="col">Total</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% bill = 0; %> 
+            <% discValue = 0; %> 
+            <% for(i = 0; i < newListItems.length; i++){ %>
+                <% item = newListItems[i] %> 
+                <% itemTotal = item.itemQty * (item.itemUPrice - item.itemDisc) %> 
+                <% itemTotalDiscount = item.itemQty * item.itemDisc %> 
+                <form action="/billRemove" method="post">
+                    <tr class="text-center">
+                        <th scope="row"><%= i+1 %> </th>
+                        <td><%= item.itemCode %></td>
+                        <td><%= item.itemName %></td>
+                        <td> <%= item.itemUPrice %></td>
+                        <td> <%= item.itemDisc %></td>
+                        <td><%= item.itemQty %></td>
+                        <td><%= itemTotal %></td>
+                        <td><button value="<%=item._id%>" type="submit" class="btn btn-danger" name="delete">Remove</button></td>
+                    </tr>
+                </form>
+                <% bill += itemTotal %> 
+                <% discValue += itemTotalDiscount %> 
+                <% } %>   
+        </tbody>
+    </table>
+
+
+
+    <div class="container text-center mt-5">
+        <div class="row">
+            <div class="col-sm-5 col-md-6">
+                <h3 class="ms-5 text-start">Checkout</h3>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-50">
+                        <span class="input-group-text text-wrap" id="basic-addon1">Payment Method:</span>
+                        <!-- <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"> -->
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected>--Select--</option>
+                            <option value="1">Card</option>
+                            <option value="2">Cash</option>
+                            <option value="3">UPI</option>
+                        </select>
+                    </div>                  
+                </div>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-50">
+                        <span class="input-group-text text-wrap" id="basic-addon1">Amount Received:</span>
+                        <input type="text" class="form-control" placeholder="Number" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+                <div class="p-0 mb-1 m-0 row">
+                    <div class="input-group mb-3 w-50">
+                        <span class="input-group-text text-wrap" id="basic-addon1">Remaining Bal:</span>
+                        <input disabled type="text" class="form-control" value="00" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>                  
+                </div>
+
+            </div>
+                <div class="col-sm-5 col-md-6">
+                    <h3 class="ms-5 text-start">Total</h3>
+                    <div class="p-0 mb-1 m-0 row">
+                        <div class="input-group mb-3 w-50">
+                            <span class="input-group-text" id="basic-addon1">MRP Total:</span>
+                            <input disabled type="text" class="form-control" value="<%= bill + discValue %> " aria-label="Username" aria-describedby="basic-addon1">
+                        </div>                  
+                    </div>
+                    <div class="p-0 mb-1 m-0 row">
+                        <div class="input-group mb-3 w-50">
+                            <span class="input-group-text text-wrap" id="basic-addon1">Discount:</span>
+                            <input id="discountBox" type="text" class="form-control" name="discApply" value="<%= discValue %>">
+                        </div>                  
+                    </div>
+                    <div class="p-0 mb-1 m-0 row">
+                        <div class="input-group mb-3 w-50">
+                            <span class="input-group-text" id="basic-addon1">Bill Value:</span>
+                            <input disabled type="text" class="form-control" value="<%= bill %> " aria-label="Username" aria-describedby="basic-addon1">
+                        </div>                  
+                    </div>
+                </div>     
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+        <div class="col align-self-end">
+            <button type="button" class="btn btn-danger">Reset</button>    
+            <button form="outer" type="submit" class="btn btn-success">Generate</button>
+        </div>
+        </div>
+    </div>
+</form>
+
+<%- include('partials/footer'); -%>
